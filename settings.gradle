@@ -1,0 +1,3 @@
+include ':letoothsample'
+rootProject.name = 'letooth-for-android'
+include ':letooth'
