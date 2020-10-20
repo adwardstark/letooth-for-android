@@ -20,7 +20,9 @@ object LetoothUtils {
     fun getBluetoothAdapter(): BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
     fun requestToEnableBluetooth(context: Context) {
-        context.startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+        val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        enableIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(enableIntent)
     }
 
     fun isBluetoothEnabled(): Boolean {
@@ -40,7 +42,9 @@ object LetoothUtils {
     }
 
     fun launchLocationServiceSettings(context: Context) {
-        context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+        val enableIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        enableIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(enableIntent)
     }
 
     fun isAnEmulator(): Boolean {

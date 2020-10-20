@@ -5,6 +5,7 @@ import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanSettings
 import android.os.ParcelUuid
 import com.adwardstark.letooth.LetoothUtils
+import kotlinx.coroutines.CoroutineScope
 
 abstract class LetoothScanner protected constructor(builder: ScanBuilder) {
 
@@ -24,7 +25,14 @@ abstract class LetoothScanner protected constructor(builder: ScanBuilder) {
     abstract fun startContinuousScan(timeOutInMilliseconds: Long,
                                      callback: ScanCallback,
                                      onScanFinished: () -> Unit)
+
+    abstract suspend fun startContinuousScan(scope: CoroutineScope,
+                                             timeOutInMilliseconds: Long,
+                                             callback: ScanCallback,
+                                             onScanFinished: () -> Unit)
+
     abstract fun stopScan(callback: ScanCallback)
+    abstract fun stopScan(scope: CoroutineScope, callback: ScanCallback)
 
     class ScanBuilder {
         var scanPeriod: Int = LetoothUtils.DEFAULT_SCAN_PERIOD

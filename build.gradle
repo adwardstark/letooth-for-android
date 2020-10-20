@@ -1,29 +1,35 @@
 buildscript {
 
     ext {
-        // Plugin Versions
+        // Plugins
         kotlin_version = '1.3.72'
         gradle_version = '4.0.0'
+        maven_version = '2.1'
 
-        // SDK Versions
-        min_sdk_version = 21
-        target_sdk_version = 29
+        // SDKs
+        backward_version = 21
+        build_version = 29
 
-        // Library Versions
-        corektx_version = '1.3.1'
+        // Libraries
+        corektx_version = '1.3.2'
         appcompat_version = '1.2.0'
-        constraintlayout_version = '2.0.1'
+        ext.kotlin_coroutines_version = '1.3.4'
+        constraintlayout_version = '2.0.2'
+
+        // Letooth Version
+        lib_version = "1.0.0-alpha"
+        lib_version_code = 1
     }
 
     repositories {
         google()
         jcenter()
-
     }
 
     dependencies {
         classpath "com.android.tools.build:gradle:${gradle_version}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:$maven_version"
     }
 }
 
@@ -31,7 +37,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-
+        maven { url "https://jitpack.io" }
     }
 }
 

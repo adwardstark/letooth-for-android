@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion target_sdk_version
+    compileSdkVersion build_version
 
     defaultConfig {
         applicationId "com.adwardstark.letoothsample"
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
+        minSdkVersion backward_version
+        targetSdkVersion build_version
         versionCode 1
         versionName "1.0"
 

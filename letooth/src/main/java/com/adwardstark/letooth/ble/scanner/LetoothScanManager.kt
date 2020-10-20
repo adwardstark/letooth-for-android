@@ -6,6 +6,9 @@ import android.bluetooth.le.ScanCallback
 import android.os.Handler
 import android.util.Log
 import com.adwardstark.letooth.LetoothUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
 
@@ -61,6 +64,22 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
         }, timeOutInMilliseconds)
     }
 
+    override suspend fun startContinuousScan(scope: CoroutineScope, timeOutInMilliseconds: Long,
+        callback: ScanCallback, onScanFinished: () -> Unit
+    ) {
+        scope.launch {
+            mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
+            requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+
+            Log.d(TAG, "Starting continuous le-scan")
+            mBluetoothLeScanner?.startScan(scanFilters, scanSettings, callback)
+            Log.d(TAG, "Scan will stop after mills: $timeOutInMilliseconds")
+            delay(timeOutInMilliseconds)
+            stopScan(scope, callback)
+            onScanFinished()
+        }
+    }
+
     override fun startContinuousScan(callback: ScanCallback, onScanFinished: () -> Unit) {
         startContinuousScan(
             LetoothUtils.DEFAULT_MAX_SCAN_PERIOD.toLong(),
@@ -76,6 +95,17 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
         Log.d(TAG, "Stopping le-scan")
         mBluetoothLeScanner?.stopScan(callback)
         mBluetoothLeScanner = null
+    }
+
+    override fun stopScan(scope: CoroutineScope, callback: ScanCallback) {
+        scope.launch {
+            mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
+            requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+
+            Log.d(TAG, "Stopping le-scan")
+            mBluetoothLeScanner?.stopScan(callback)
+            mBluetoothLeScanner = null
+        }
     }
 
 }
