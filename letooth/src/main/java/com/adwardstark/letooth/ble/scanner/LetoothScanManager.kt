@@ -26,7 +26,9 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
 
     override fun startScan(callback: ScanCallback) {
         mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
-        requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+        if(mBluetoothLeScanner == null)
+            return
+        //requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
 
         Log.d(TAG, "Starting le-scan")
         mBluetoothLeScanner?.startScan(scanFilters, scanSettings, callback)
@@ -38,7 +40,9 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
 
     override fun startScan(callback: ScanCallback, onScanFinished: () -> Unit) {
         mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
-        requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+        if(mBluetoothLeScanner == null)
+            return
+        //requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
 
         Log.d(TAG, "Starting le-scan")
         mBluetoothLeScanner?.startScan(scanFilters, scanSettings, callback)
@@ -53,7 +57,9 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
                                      callback: ScanCallback,
                                      onScanFinished: () -> Unit) {
         mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
-        requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+        if(mBluetoothLeScanner == null)
+            return
+        //requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
 
         Log.d(TAG, "Starting continuous le-scan")
         mBluetoothLeScanner?.startScan(scanFilters, scanSettings, callback)
@@ -69,7 +75,9 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
     ) {
         scope.launch {
             mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
-            requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+            if(mBluetoothLeScanner == null)
+                return@launch
+            //requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
 
             Log.d(TAG, "Starting continuous le-scan")
             mBluetoothLeScanner?.startScan(scanFilters, scanSettings, callback)
@@ -90,7 +98,9 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
 
     override fun stopScan(callback: ScanCallback) {
         mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
-        requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+        if(mBluetoothLeScanner == null)
+            return
+        //requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
 
         Log.d(TAG, "Stopping le-scan")
         mBluetoothLeScanner?.stopScan(callback)
@@ -100,7 +110,9 @@ class LetoothScanManager(builder: ScanBuilder): LetoothScanner(builder) {
     override fun stopScan(scope: CoroutineScope, callback: ScanCallback) {
         scope.launch {
             mBluetoothLeScanner = mBluetoothAdapter!!.bluetoothLeScanner
-            requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
+            if(mBluetoothLeScanner == null)
+                return@launch
+            //requireNotNull(mBluetoothLeScanner) { "Bluetooth-LE not available" }
 
             Log.d(TAG, "Stopping le-scan")
             mBluetoothLeScanner?.stopScan(callback)
